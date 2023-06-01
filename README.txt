@@ -1,5 +1,3 @@
-Mohammad Raza
-101199686
 
 The vendors folder must contain all the vendors JSON files.
 The program only reads the JSON files in that folder.
