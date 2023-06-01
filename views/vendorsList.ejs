@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Vendors</title>
+</head>
+<body style="background-color: #436ade;">
+<a href="/">Home</a>
+<a href="/vendors">Vendors</a>
+<a href="/addvendor">Add Vendors</a>
+
+<li>
+	<!-- This is a loop that ensures that all vendors are displayed in the list and their names become the links to get method of vendor:id 
+		which displays the information about the specific vendor-->
+	<% for (var i=0; i< vendors.length;i++){ %>
+	<ol> <a href="/vendors/:<%=vendors[i].id%>"><%= vendors[i].name %> </a></ol>
+	<% } %>
+</li>
+</body>
+</html>

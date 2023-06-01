@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Vendor's Details</title>
+</head>
+<body style="background-color: #436ade;">
+	<a href="/">Home</a>
+	<a href="/vendors">Vendors</a>
+	<a href="/addvendor">Add Vendors</a>
+	<p id="id" style="visibility: hidden;"><%=vendors.id%></p>
+	<label>Enter Name: </label>
+	<input type="text" id="name" value="<%=vendors.name %>">
+
+	<label>Delivery Fee: </label>
+	<input type="number" id="delivery" value="<%=vendors.delivery_fee %>">
+
+	<label>Minimum Order: </label>
+	<input type="number" id="min" value="<%=vendors.min_order %>"><br>
+
+	<label for="supplies">Supplies:</label><br>
+	<% for(var k in vendors.supplies) {%>
+		<h3><%=k %></h3>
+		<% for(var j in vendors.supplies[k]) {%>
+		<h4><%=j %></h4>
+			<% for(var z in vendors.supplies[k][j]) {%>
+			<label><%=z %>
+			<input type="text" name="name" value="<%=vendors.supplies[k][j][z]%>">
+		</label><br>
+			<% } %>
+		<% } %>
+	<% } %>
+
+
+	<br><br><h2>Add New Supply</h2>
+	<label for="newSupply">Choose Category:</label>
+	<select id="newSupply">
+		<% for(var k in vendors.supplies) {%>
+		<option value="<%=k%>"><%=k%></option>
+			<% } %>
+	</select><br><br>
+	<label>name:
+			<input type="text" id="newname" placeholder="type name here">
+		</label><br><br>
+	<label>description:
+			<input type="text" id="description" placeholder="type description">
+		</label><br><br>
+	<label>stock:
+			<input type="number" id="stock" placeholder="type stock">
+		</label><br><br>
+	<label>price:
+			<input type="number" id="price" placeholder="type price">
+		</label><br><br>	
+	<br><button onclick="loadingDoc()" placeholder="button">Save</button>
+
+	<script>
+	
+	function loadingDoc()
+	{
+        const data = {
+			name:document.getElementById('name').value,
+			delivery_fee : document.getElementById('delivery').value,
+			min_order : document.getElementById('min').value,
+			category : document.getElementById('newSupply').value,
+			new_name : document.getElementById('newname').value,
+			description : document.getElementById('description').value,
+			stock : document.getElementById('stock').value,
+			price : document.getElementById('price').value
+		}
+		id = document.getElementById("id").innerHTML;
+		const xhttp = new XMLHttpRequest();
+		xhttp.open("put","/vendors/:"+id,true);
+		xhttp.setRequestHeader('Content-type', 'application/json');
+		xhttp.send(JSON.stringify(data));
+		xhttp.onreadystatechange = function(){
+			if(xhttp.status == 200){
+				alert("Saved Changes");
+				var index = JSON.parse(xhttp.response);
+				index.replace("\"","")
+				window.location="/vendors/:"+index;
+			}
+			else{
+				alert("Not saved");
+			}
+		};
+	}
+
+</script>	
+</body>
+</html>

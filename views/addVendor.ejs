@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Add Vendor</title>
+</head>
+<body style="background-color: #436ade;">
+	<a href="/">Home</a>
+	<a href="/vendors">Vendors</a>
+	<a href="/addvendor">Add Vendors</a>
+	<br></br>
+<form>
+	<!-- This is where the new vendor specifies the name,delivery and minimum order-->
+	<label>Enter Name: </label>
+	<input type="text" id="name" placeholder="John Doe">
+
+	<label>Delivery Fee: </label>
+	<input type="number" id="delivery" placeholder="1">
+
+	<label>Minimum Order: </label>
+	<input type="number" id="min" placeholder="5"><br>
+	<button onclick="loadingDoc()" type="button">Add</button>
+</form>
+
+<script>
+	
+	function loadingDoc()
+	{
+        const data = {
+			name:document.getElementById('name').value,
+			delivery_fee : document.getElementById('delivery').value,
+			min_order : document.getElementById('min').value
+		}
+		const xhttp = new XMLHttpRequest();
+		xhttp.open("post","/vendors",true);
+		xhttp.setRequestHeader('Content-type', 'application/json');
+		xhttp.send(JSON.stringify(data));
+		xhttp.onreadystatechange = function(){
+			if(xhttp.status == 200){
+				window.location = "/vendors/:"+JSON.parse(xhttp.response).id;
+			}
+		};
+	}
+</script>
+</body>
+</html>
